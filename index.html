@@ -28,12 +28,6 @@ img.slide {
     border-radius: 15px;
     margin-bottom: 20px;
     box-shadow: 0 0 20px rgba(255,77,109,0.6);
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-
-img.visible {
-    opacity: 1;
 }
 
 button {
@@ -45,14 +39,14 @@ button {
     color: white;
     cursor: pointer;
     box-shadow: 0 0 20px rgba(255,77,109,0.6);
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .text {
     display: none;
     font-size: 24px;
     line-height: 1.6;
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
 }
 
@@ -93,7 +87,7 @@ button {
 
     <button id="startBtn">Нажми сюда, кися ❤️</button>
 
-    <!-- Фотки -->
+    <!-- Все фотки сразу -->
     <img class="slide" src="photo1.jpg" alt="Фото 1">
     <img class="slide" src="photo2.jpg" alt="Фото 2">
     <img class="slide" src="photo3.jpg" alt="Фото 3">
@@ -141,6 +135,7 @@ button {
 
         <div class="signature">Твой ❤️</div>
     </div>
+
 </div>
 
 <audio id="music" loop>
@@ -148,24 +143,11 @@ button {
 </audio>
 
 <script>
-const slides = document.querySelectorAll('.slide');
-let current = 0;
-
-// Плавное проявление фоток, без дергания
+// Кнопка запускает музыку и текст
 document.getElementById('startBtn').onclick = function() {
     document.getElementById('music').play();
     document.getElementById('startBtn').style.display = 'none';
     document.getElementById('loveText').style.display = 'block';
-
-    // Показываем фотки по очереди с задержкой, чтобы текст можно было читать
-    function revealNext() {
-        if(current < slides.length){
-            slides[current].classList.add('visible');
-            current++;
-            setTimeout(revealNext, 1000); // каждая фотка проявляется через 1 секунду
-        }
-    }
-    revealNext();
 }
 
 // Падающие сердечки
