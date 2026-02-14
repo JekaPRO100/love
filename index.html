@@ -29,7 +29,7 @@ img.slide {
     margin-bottom: 20px;
     box-shadow: 0 0 20px rgba(255,77,109,0.6);
     opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+    transition: opacity 1s ease-in-out;
 }
 
 img.visible {
@@ -151,30 +151,21 @@ button {
 const slides = document.querySelectorAll('.slide');
 let current = 0;
 
-// Показываем фото по очереди
-function showSlide(index) {
-    slides.forEach((s,i) => {
-        if(i === index) {
-            s.classList.add('visible');
-        } else {
-            s.classList.remove('visible');
-        }
-    });
-}
-
+// Плавное проявление фоток, без дергания
 document.getElementById('startBtn').onclick = function() {
     document.getElementById('music').play();
     document.getElementById('startBtn').style.display = 'none';
     document.getElementById('loveText').style.display = 'block';
-    showSlide(0);
 
-    // Меняем фотки каждые 4 секунды
-    setInterval(() => {
-        current = (current + 1) % slides.length;
-        showSlide(current);
-        // Скролл вниз к текущей фотке (плавно)
-        slides[current].scrollIntoView({behavior: "smooth"});
-    }, 4000);
+    // Показываем фотки по очереди с задержкой, чтобы текст можно было читать
+    function revealNext() {
+        if(current < slides.length){
+            slides[current].classList.add('visible');
+            current++;
+            setTimeout(revealNext, 1000); // каждая фотка проявляется через 1 секунду
+        }
+    }
+    revealNext();
 }
 
 // Падающие сердечки
