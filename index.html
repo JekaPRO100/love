@@ -12,16 +12,16 @@ body {
     margin: 0;
     padding: 0;
     background: black;
-    overflow: hidden;
     font-family: 'Playfair Display', serif;
     color: white;
     text-align: center;
+    overflow-y: auto; /* Разрешаем прокрутку */
 }
 
 .container {
     position: relative;
-    height: 100vh;
     width: 100%;
+    min-height: 100vh; /* Позволяет странице быть выше экрана */
 }
 
 .slide {
@@ -56,9 +56,9 @@ body {
 .content {
     position: relative;
     z-index: 2;
-    top: 50%;
-    transform: translateY(-50%);
     padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 button {
@@ -70,15 +70,16 @@ button {
     color: white;
     cursor: pointer;
     box-shadow: 0 0 20px rgba(255,77,109,0.6);
+    margin-top: 20px;
 }
 
 .text {
     display: none;
     font-size: 24px;
-    max-width: 800px;
-    margin: 30px auto;
+    margin-top: 30px;
     line-height: 1.6;
     animation: fadeText 3s ease-in-out forwards;
+    text-align: center;
 }
 
 @keyframes fadeText {
@@ -110,14 +111,8 @@ button {
 }
 
 @keyframes fall {
-    0% {
-        transform: translateY(-10%);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(110vh);
-        opacity: 0;
-    }
+    0% { transform: translateY(-10%); opacity: 1; }
+    100% { transform: translateY(110vh); opacity: 0; }
 }
 </style>
 </head>
@@ -141,9 +136,9 @@ button {
             как сильно ты изменила мой мир.<br><br>
 
             С тобой тишина становится уютной,  
-            а сердце — спокойным и настоящим.<br><br>
+            а сердце -- спокойным и настоящим.<br><br>
 
-            Ты — мой свет в темноте,  
+            Ты -- мой свет в темноте,  
             моя нежность, мой самый тёплый дом.<br><br>
 
             И если жизнь однажды снова спросит меня,  
@@ -168,6 +163,7 @@ function startLove() {
     document.getElementById("loveText").style.display = "block";
 }
 
+// Падающие сердечки
 setInterval(() => {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -177,9 +173,7 @@ setInterval(() => {
     heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
     document.querySelector(".hearts").appendChild(heart);
 
-    setTimeout(() => {
-        heart.remove();
-    }, 7000);
+    setTimeout(() => { heart.remove(); }, 7000);
 }, 500);
 </script>
 
