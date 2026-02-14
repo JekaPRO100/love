@@ -17,8 +17,6 @@ body {
 }
 
 .container {
-    position: relative;
-    width: 100%;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
@@ -27,11 +25,15 @@ body {
 img.slide {
     width: 100%;
     height: auto;
-    display: none; /* показываем по слайд-шоу */
     border-radius: 15px;
     margin-bottom: 20px;
     box-shadow: 0 0 20px rgba(255,77,109,0.6);
-    transition: opacity 1s ease-in-out;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+img.visible {
+    opacity: 1;
 }
 
 button {
@@ -89,7 +91,9 @@ button {
 
 <div class="container">
 
-    <!-- Слайды (8 фоток) -->
+    <button id="startBtn">Нажми сюда, кися ❤️</button>
+
+    <!-- Фотки -->
     <img class="slide" src="photo1.jpg" alt="Фото 1">
     <img class="slide" src="photo2.jpg" alt="Фото 2">
     <img class="slide" src="photo3.jpg" alt="Фото 3">
@@ -99,8 +103,7 @@ button {
     <img class="slide" src="photo7.jpg" alt="Фото 7">
     <img class="slide" src="photo8.jpg" alt="Фото 8">
 
-    <button id="startBtn">Нажми сюда, кися ❤️</button>
-
+    <!-- Текст -->
     <div class="text" id="loveText">
         Кися…<br><br>
         Моё солнышко, ты даже не представляешь,  
@@ -145,12 +148,18 @@ button {
 </audio>
 
 <script>
-// Слайд-шоу через <img>
-let slides = document.querySelectorAll('.slide');
+const slides = document.querySelectorAll('.slide');
 let current = 0;
 
+// Показываем фото по очереди
 function showSlide(index) {
-    slides.forEach((s,i) => s.style.display = (i === index) ? 'block' : 'none');
+    slides.forEach((s,i) => {
+        if(i === index) {
+            s.classList.add('visible');
+        } else {
+            s.classList.remove('visible');
+        }
+    });
 }
 
 document.getElementById('startBtn').onclick = function() {
@@ -159,10 +168,13 @@ document.getElementById('startBtn').onclick = function() {
     document.getElementById('loveText').style.display = 'block';
     showSlide(0);
 
+    // Меняем фотки каждые 4 секунды
     setInterval(() => {
         current = (current + 1) % slides.length;
         showSlide(current);
-    }, 4000); // каждые 4 секунды меняем фото
+        // Скролл вниз к текущей фотке (плавно)
+        slides[current].scrollIntoView({behavior: "smooth"});
+    }, 4000);
 }
 
 // Падающие сердечки
